@@ -8,17 +8,22 @@ namespace Pattern
 {
     abstract class ICar
     {
-       protected float _speed;
-       protected float _velocity;
-       protected float _maxSpeed;
-       public virtual void MoveForward() {
+        protected float _speed;
+        protected float _velocity;
+        protected float _maxSpeed;
+        public virtual void MoveForward() {
             if (_speed < _maxSpeed)
                 _speed += _velocity;
         }
-       public virtual void MoveBack()
+        public virtual void MoveBack()
         {
             if (_speed > 0)
                 _speed -= _velocity;
+        }
+
+        public string InfOfCar()
+        {
+            return this.ToString();
         }
     }
 

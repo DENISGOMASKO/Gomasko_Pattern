@@ -20,28 +20,63 @@ namespace Pattern
         Covered,
         Open
     }
-    abstract class IParcing
+    abstract class IParking
     {
-        protected int _number_of_parking_spaces;
-        protected string _address;
+        //protected int _number_of_parking_spaces;
+        //protected string _address;
 
         protected typplacement_types _typplacement_type;
         protected protection_types _protection_type;
         protected cover_types _cover_type;
-        protected List<ICar> _cars = new List<ICar> { }; 
-    }
+        protected List<ICar> _cars = new List<ICar> { };
 
-    class SportCarParking : IParcing
-    {
-        public SportCarParking()
+        public abstract ICar CreateCar();
+        public string StatOfCars()
         {
-            _protection_type = protection_types.Guarded;
-            _cover_type = cover_types.Covered;
+            string str = "";
+            foreach (var i in _cars)
+            {
+                str += i.InfOfCar() + ' ';
+            }
+            return "\n\n" + this.InfOfParking() + '\n' + _cars.Count.ToString() + '\n' + str;
+        }
+        public string InfOfParking()
+        {
+            return this.ToString() + " (" + _typplacement_type.ToString() + ' ' + _protection_type.ToString() + ' ' + _cover_type.ToString() + ')';
         }
     }
 
-    class BaseCarParking : IParcing
+    class SportCarParking : IParking
     {
-        public BaseCarParking
+        public SportCarParking(typplacement_types tp_t, protection_types p_t = protection_types.Guarded, cover_types c_t = cover_types.Covered)
+        {
+            _typplacement_type = tp_t;
+            _protection_type = p_t;
+            _cover_type = c_t;
+        }
+        public SportCarParking() {;}
+        public override ICar CreateCar()
+        {
+            SportCar car = new SportCar();
+            _cars.Add(car);
+            return car;
+        }
+    }
+
+    class BaseCarParking : IParking
+    {
+        public BaseCarParking(typplacement_types tp_t, protection_types p_t, cover_types c_t)
+        {
+            _typplacement_type = tp_t;
+            _protection_type = p_t;
+            _cover_type = c_t;
+        }
+        public BaseCarParking() {;}
+        public override ICar CreateCar()
+        {
+            BaseCar car = new BaseCar();
+            _cars.Add(car);
+            return car;
+        }
     }
 }
